@@ -12,7 +12,7 @@ obj = Student()
 obj.study()
 
 
-# private class = __name = "abc" , protected class = _name = "abc"
+# private class = __name = "abc" , protected class = _name = "abc" , public class = name = "abc"
 
 # Hybrid Inheritance of class
 class A:
