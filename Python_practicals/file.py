@@ -9,7 +9,7 @@ file.write("My name is Saurabh Negi")
 file.close()
 
 # tell is used to retreive the position of the cursor
-#print(file.tell())
+print(file.tell())
 
 # seek is used to move the position of the cursor
-#file.seek(12)
+file.seek(12)
