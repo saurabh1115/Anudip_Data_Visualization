@@ -64,7 +64,7 @@ print("After updating values")
 print(data)
 print(data.loc[3,['Fruit Name']])
 
-# 
+# adding column through conditions
 fruit_data = {"Fruit": ['Apple','Avacado','Banana','Strawberry','Grape'],"Colour":
 ['Red','Green','Yellow','Pink','Green'],
 "Cost": [45, 90, 60, 37, 49]
@@ -73,3 +73,31 @@ data = pd.DataFrame(fruit_data)
 data.loc[data['Cost']>=60,'Remarks'] = 'mehenga'
 data.loc[data['Cost']<60,'Remarks'] = 'sasta'
 print(data)
+
+# deleting a row 
+data = {
+'EmployeeID': [101, 102, 103, 104, 105],
+'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+'Age': [28, 32, 29, 35, 26]
+}
+df = pd.DataFrame(data)
+print("Initial DataFrame:")
+print(df)
+employee_to_delete = 'Charlie'
+df = df.loc[df['Name'] != employee_to_delete]
+print("\nafter deleting the row for 'Charlie':")
+print(df)
+
+# deleting a row based on a condition
+data = {
+'OrderID': [101, 102, 103, 104, 105],
+'Product': ['Widget', 'Gadget', 'Widget', 'Doodad', 'Widget'],
+'Quantity': [10, 5, 0, 7, 15],
+'Status': ['Shipped', 'Canceled', 'Canceled', 'Shipped', 'Shipped']
+}
+df = pd.DataFrame(data)
+print("Initial DataFrame:")
+print(df)
+df = df[df['Status'] != 'Canceled']
+print("\nafter deleting 'Canceled' orders:")
+print(df)
