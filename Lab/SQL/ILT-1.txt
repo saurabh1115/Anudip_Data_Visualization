@@ -1,0 +1,138 @@
+CREATE DATABASE StudentManagementSystem;
+Query OK, 1 row affected (0.01 sec)
+
+USE StudentManagementSystem;
+Database changed
+
+CREATE TABLE Student (
+    ->     StudentID INT PRIMARY KEY,
+    ->     FirstName VARCHAR(50),
+    ->     LastName VARCHAR(50),
+    ->     DateOfBirth DATE,
+    ->     Gender CHAR(1),
+    ->     Email VARCHAR(100),
+    ->     Phone VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc student;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| StudentID   | int          | NO   | PRI | NULL    |       |
+| FirstName   | varchar(50)  | YES  |     | NULL    |       |
+| LastName    | varchar(50)  | YES  |     | NULL    |       |
+| DateOfBirth | date         | YES  |     | NULL    |       |
+| Gender      | char(1)      | YES  |     | NULL    |       |
+| Email       | varchar(100) | YES  |     | NULL    |       |
+| Phone       | varchar(15)  | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+ CREATE TABLE Course (
+    ->     CourseID INT PRIMARY KEY,
+    ->     CourseTitle VARCHAR(100),
+    ->     Credits INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> desc course;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| CourseID    | int          | NO   | PRI | NULL    |       |
+| CourseTitle | varchar(100) | YES  |     | NULL    |       |
+| Credits     | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Instructor (
+    ->     InstructorID INT PRIMARY KEY,
+    ->     FirstName VARCHAR(50),
+    ->     LastName VARCHAR(50),
+    ->     Email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC INSTRUCTOR;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| InstructorID | int          | NO   | PRI | NULL    |       |
+| FirstName    | varchar(50)  | YES  |     | NULL    |       |
+| LastName     | varchar(50)  | YES  |     | NULL    |       |
+| Email        | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> CREATE TABLE Enrollment (
+    ->     EnrollmentID INT PRIMARY KEY,
+    ->     EnrollmentDate DATE,
+    ->     StudentID INT,
+    ->     CourseID INT,
+    ->     InstructorID INT,
+    ->     FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    ->     FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+    ->     FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC ENROLLMENT;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| EnrollmentID   | int  | NO   | PRI | NULL    |       |
+| EnrollmentDate | date | YES  |     | NULL    |       |
+| StudentID      | int  | YES  | MUL | NULL    |       |
+| CourseID       | int  | YES  | MUL | NULL    |       |
+| InstructorID   | int  | YES  | MUL | NULL    |       |
++----------------+------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Score (
+    ->     ScoreID INT PRIMARY KEY,
+    ->     CourseID INT,
+    ->     StudentID INT,
+    ->     DateOfExam DATE,
+    ->     CreditObtained INT,
+    ->     FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+    ->     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC SCORE;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| ScoreID        | int  | NO   | PRI | NULL    |       |
+| CourseID       | int  | YES  | MUL | NULL    |       |
+| StudentID      | int  | YES  | MUL | NULL    |       |
+| DateOfExam     | date | YES  |     | NULL    |       |
+| CreditObtained | int  | YES  |     | NULL    |       |
++----------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+=-----------------------------------------------------------------------------------------------------------------------------------------
+ CREATE TABLE Feedback (
+    ->     FeedbackID INT PRIMARY KEY,
+    ->     StudentID INT,
+    ->     Date DATE,
+    ->     InstructorName VARCHAR(100),
+    ->     Feedback TEXT,
+    ->     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC FEEDBACK;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| FeedbackID     | int          | NO   | PRI | NULL    |       |
+| StudentID      | int          | YES  | MUL | NULL    |       |
+| Date           | date         | YES  |     | NULL    |       |
+| InstructorName | varchar(100) | YES  |     | NULL    |       |
+| Feedback       | text         | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------------------------------------------

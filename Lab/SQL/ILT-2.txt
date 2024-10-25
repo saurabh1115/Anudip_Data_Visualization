@@ -1,0 +1,157 @@
+Lab 1. Use the Database and table from ILT1 lab. Insert 5 records in each table
+and retrieve data from all tables and display.
+
+mysql> INSERT INTO Employees (employee_id, first_name, last_name)
+    -> VALUES
+    ->     (1, 'Alice', 'Johnson'),
+    ->     (2, 'Bob', 'Smith'),
+    ->     (3, 'Charlie', 'Brown'),
+    ->     (4, 'Diana', 'Prince'),
+    ->     (5, 'Evan', 'Williams');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO EmergencyContacts (contact_id, employee_id, name, phone_number, relationship)
+    -> VALUES
+    ->     (1, 1, 'Robert Johnson', '123-456-7890', 'Father'),
+    ->     (2, 2, 'Linda Smith', '234-567-8901', 'Mother'),
+    ->     (3, 3, 'Sophia Brown', '345-678-9012', 'Spouse'),
+    ->     (4, 4, 'Bruce Wayne', '456-789-0123', 'Brother'),
+    ->     (5, 5, 'Emily Williams', '567-890-1234', 'Sister');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     e.employee_id, e.first_name, e.last_name,
+    ->     ec.name AS emergency_contact_name, ec.phone_number AS emergency_contact_phone, ec.relationship
+    -> FROM
+    ->     Employees e
+    -> JOIN
+    ->     EmergencyContacts ec ON e.employee_id = ec.employee_id;
++-------------+------------+-----------+------------------------+-------------------------+--------------+
+| employee_id | first_name | last_name | emergency_contact_name | emergency_contact_phone | relationship |
++-------------+------------+-----------+------------------------+-------------------------+--------------+
+|           1 | Alice      | Johnson   | Robert Johnson         | 123-456-7890            | Father       |
+|           2 | Bob        | Smith     | Linda Smith            | 234-567-8901            | Mother       |
+|           3 | Charlie    | Brown     | Sophia Brown           | 345-678-9012            | Spouse       |
+|           4 | Diana      | Prince    | Bruce Wayne            | 456-789-0123            | Brother      |
+|           5 | Evan       | Williams  | Emily Williams         | 567-890-1234            | Sister       |
++-------------+------------+-----------+------------------------+-------------------------+--------------+
+5 rows in set (0.00 sec)
+
+Lab 2. For this assignment, please use the same tables created in your previous
+lab session.
+
+Task 1: Update the Student table with the following information:
+Change the email to 'jane_Smith@example.com'
+Where FirstName is 'Jane' and LastName is 'Smith';
+Update the Instructor with the following information:
+Change the email to 'rogerwhite@example.com'
+Where FirstName of the instructor is 'Roger' and LastName is 'White';
+
+mysql> UPDATE Student
+    -> SET Email = 'jane_Smith@example.com'
+    -> WHERE FirstName = 'Jane' AND LastName = 'Smith';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE Instructor
+    -> SET Email = 'rogerwhite@example.com'
+    -> WHERE FirstName = 'Roger' AND LastName = 'White';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+Task 2:
+Delete record
+from the Student table on following condition:
+Delete
+student/students records from the Student table where last name is Smith.
+
+mysql> DELETE FROM Student
+    -> WHERE LastName = 'Smith';
+Query OK, 0 rows affected (0.00 sec)
+
+Task 3: List the student whose first name starts with J.
+
+mysql> SELECT *
+    -> FROM Student
+    -> WHERE FirstName LIKE 'J%';
+Empty set (0.00 sec)
+
+Lab 3.Database Schema:
+Consider a simple database with one tables: Employee
+●Employee Table:
+Columns: emp_id (Primary Key), first_name, last_name, age, email
+
+mysql> CREATE TABLE Employee (
+    ->     emp_id INT PRIMARY KEY,
+    ->     first_name VARCHAR(50),
+    ->     last_name VARCHAR(50),
+    ->     age INT,
+    ->     email VARCHAR(100)
+    -> );
+
+Query OK, 0 rows affected (0.04 sec)
+
+Task 1: Insert Data
+Write an SQL INSERT statement to insert data into the Employee table.
+
+mysql> INSERT INTO Employee (emp_id, first_name, last_name, age, email)
+    -> VALUES
+    ->   (1, 'John', 'Doe', 30, 'john.doe@example.com'),
+    ->   (2, 'Jane', 'Smith', 25, 'jane.smith@example.com'),
+    ->   (3, 'Alice', 'Johnson', 35, 'alice.johnson@example.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Task 2: Retrieving Data
+Write an SQL SELECT statement to retrieve the first_name and last_name of all
+employees from the Employee table.
+
+mysql> SELECT first_name, last_name
+    -> FROM Employee;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| John       | Doe       |
+| Jane       | Smith     |
+| Alice      | Johnson   |
++------------+-----------+
+3 rows in set (0.00 sec)
+
+Task 3: Filtering Data
+Write an SQL SELECT statement to retrieve the first_name, last_name, and age of
+employees who are older than 30 years
+
+mysql> SELECT first_name, last_name, age
+    -> FROM Employee
+    -> WHERE age > 30;
++------------+-----------+------+
+| first_name | last_name | age  |
++------------+-----------+------+
+| Alice      | Johnson   |   35 |
++------------+-----------+------+
+1 row in set (0.00 sec)
+
+Task 4: Updating Data
+Write an SQL UPDATE statement to increase the age of employees by 1 year for all
+employees older than 25.
+
+mysql> UPDATE Employee
+    -> SET age = age + 1
+    -> WHERE age > 25;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+ChatGPT Exercise
+Using ChatGPT generates SQL queries to update the Employee salary.
+Scenario:
+Due to a pricing adjustment, the company decided to increase the salary of all
+employees by 10%. Create an SQL update query to apply this change selectively to
+employees with a specific job title, say 'Manager.'
+
+mysql> UPDATE Employee
+    -> SET salary = salary * 1.1
+    -> WHERE job_title = 'Manager';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0

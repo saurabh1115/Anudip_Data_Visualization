@@ -1,0 +1,164 @@
+Assignment 1:
+Task1: Assume you are managing a database of student records, and you need to
+retrieve information about students born after June 16, 2009. What will be the sql query
+for this?
+
+mysql> SELECT *
+    -> FROM Student
+    -> WHERE DateOfBirth > '2009-06-16';
+Empty set (0.00 sec)
+
+Task2: Assume you have a database containing a "Student" table with information
+about students, including their first names. You want to retrieve records of students
+whose first names start with either 'A' or 'J'. To achieve this,what will be your sql query?
+mysql> SELECT *
+    -> FROM Student
+    -> WHERE firstname LIKE 'A%' OR firstname LIKE 'c%';
++-----------+-----------+----------+-------------+--------+-------------------------+------------+
+| StudentID | FirstName | LastName | DateOfBirth | Gender | Email                   | Phone      |
++-----------+-----------+----------+-------------+--------+-------------------------+------------+
+|         2 | Alice     | Smith    | 1998-08-20  | F      | alice.smith@example.com | 9876543210 |
+|         5 | Chris     | Brown    | 2002-07-25  | M      | chris.brown@example.com | 4443332222 |
++-----------+-----------+----------+-------------+--------+-------------------------+------------+
+2 rows in set (0.00 sec)
+
+Task 3 .Let's consider a scenario where you have a database with a "Student" table that
+contains information about students, including their first names and email addresses.
+You want to retrieve records of students whose first name is not 'Alice' and whose email
+addresses contain the domain '@example.com'. To achieve this, what will be your sql
+query?
+mysql> SELECT *
+    -> FROM Student
+    -> WHERE firstname <> 'Alice' AND email LIKE '%@example.com';
++-----------+---------------+-------------+-------------+--------+-------------------------+------------+
+| StudentID | FirstName     | LastName    | DateOfBirth | Gender | Email                   | Phone      |
++-----------+---------------+-------------+-------------+--------+-------------------------+------------+
+|         1 | John          | Doe         | 1995-05-15  | M      | john.doe@example.com    | 1234567890 |
+|         3 | Bob           | Johnson     | 2000-11-02  | M      | bob.johnson@example.com | 5551234567 |
+|         4 | Emily         | Davis       | 1997-03-10  | F      | emily.davis@example.com | 7778889999 |
+|         5 | Chris         | Brown       | 2002-07-25  | M      | chris.brown@example.com | 4443332222 |
+|         6 | New Student 1 | Last Name 1 | 2001-01-01  | M      | new1@example.com        | 1010101010 |
+|         7 | New Student 2 | Last Name 2 | 2003-05-12  | F      | new2@example.com        | 2020202020 |
+|         8 | New Student 3 | Last Name 3 | 2004-09-23  | M      | new3@example.com        | 3030303030 |
++-----------+---------------+-------------+-------------+--------+-------------------------+------------+
+7 rows in set (0.00 sec)
+
+Assignment 2:
+
+Task1:
+Create a table Person with
+PersonID int, FirstName varchar(255),
+LastName varchar(255) and age (int).
+Make
+PersonID PRIMARY KEY.
+mysql> CREATE TABLE Person (
+    ->     PersonID INT PRIMARY KEY,
+    ->     FirstName VARCHAR(255),
+    ->     LastName VARCHAR(255),
+    ->     Age INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+Task2: Create a table Employee
+with
+emp_id int, first_name varchar(255),
+last_name varchar(255) and age (int )
+Make
+emp_id PRIMARY KEY.
+
+mysql> CREATE TABLE Employee (
+    ->     emp_id INT PRIMARY KEY,
+    ->     first_name VARCHAR(50),
+    ->     last_name VARCHAR(50),
+    ->     age INT,
+    ->     email VARCHAR(100)
+    -> );
+
+Task 3: Insert data to Person table
+
+mysql> INSERT INTO Person (PersonID, FirstName, LastName, Age)
+    -> VALUES
+    ->   (1, 'John', 'Doe', 30),
+    ->   (2, 'Jane', 'Smith', 25),
+    ->   (3, 'Alice', 'Johnson', 35);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Task 4: Insert data to Employee table
+
+mysql> INSERT INTO Employee (emp_id, first_name, last_name, age, email)
+    -> VALUES
+    ->   (1, 'John', 'Doe', 30, 'john.doe@example.com'),
+    ->   (2, 'Jane', 'Smith', 25, 'jane.smith@example.com'),
+    ->   (3, 'Alice', 'Johnson', 35, 'alice.johnson@example.com');
+Query OK, 3 rows affected (0.01 sec)
+
+Task 5: Create Union of two tables
+
+mysql> SELECT PersonID, FirstName, LastName, Age
+    -> FROM Person
+    -> UNION ALL
+    -> SELECT emp_id AS PersonID, first_name, last_name, age
+    -> FROM Employee;
++----------+----------------+-------------+------+
+| PersonID | FirstName      | LastName    | Age  |
++----------+----------------+-------------+------+
+|        1 | John           | Doe         |   30 |
+|        2 | Jane           | Smith       |   25 |
+|        3 | Alice          | Johnson     |   35 |
+|        1 | John           | Doe         |   31 |
+|        2 | Jane           | Smith       |   25 |
+|        3 | Alice          | Johnson     |   36 |
+|        4 | Bob            | Miller      |   40 |
+|        5 | abc            | Millers     |   40 |
+|        6 | John           | Doe         |   30 |
+|        7 | New Employee 1 | Last Name 1 |   32 |
+|        9 | New Employee 3 | Last Name 3 |   38 |
+|       10 | New Employee 4 | Last Name 4 |   42 |
++----------+----------------+-------------+------+
+12 rows in set (0.00 sec)
+
+Lab 1: Use the Student management system Database and table from our previous lab
+and write a sql query to achieve the below scenario.
+Assume you are managing a university database that tracks student enrollments in
+various courses. You have two tables, "Student" and "Enrollment". The goal is to
+retrieve information about each student's ID, first name, last name, and their enrollment
+details, including the enrollment ID and the associated course ID.
+Hint:Use inner join to retrieve data
+mysql> SELECT
+    ->     s.StudentID,
+    ->     s.FirstName,
+    ->     s.LastName,
+    ->     e.EnrollmentID,
+    ->     e.CourseID
+    -> FROM Student s
+    -> INNER JOIN Enrollment e ON s.StudentID = e.StudentID;
++-----------+-----------+----------+--------------+----------+
+| StudentID | FirstName | LastName | EnrollmentID | CourseID |
++-----------+-----------+----------+--------------+----------+
+|         1 | John      | Doe      |          101 |      101 |
+|         2 | Alice     | Smith    |          102 |      102 |
+|         3 | Bob       | Johnson  |          103 |      101 |
+|         4 | Emily     | Davis    |          104 |      103 |
+|         5 | Chris     | Brown    |          105 |      102 |
++-----------+-----------+----------+--------------+----------+
+5 rows in set (0.00 sec)
+
+Using ChatGPT generate SQL queries of the below problem .
+Scenario 1: In a student grades database with tables for courses and grades, find the
+courses where the average grade is below a 'C' (consider 'C' as a passing grade).
+We have a "Course" table with the following columns:
+CourseId,CourseName,CreditHours and
+"Grade" table with the following a columns: StudentId(Foreign Key),CourseID(Foreign
+Key),Grade.
+you want to find courses where the average grade is below a "C". Generate the
+ChatGPT prompt for creating the queries for the above requirement.
+
+mysql> SELECT c.CourseId, c.Coursetitle, AVG(g.Grade) AS AverageGrade FROM Course c INNER JOIN Grade g ON c.CourseId = g.CourseID GROUP BY c.CourseId, c.Coursetitle HAVING AVG(g.Grade) < 70;
++----------+--------------------------------+--------------+
+| CourseId | Coursetitle                    | AverageGrade |
++----------+--------------------------------+--------------+
+|      102 | Data Structures and Algorithms |    67.500000 |
++----------+--------------------------------+--------------+
+1 row in set (0.00 sec)
+
