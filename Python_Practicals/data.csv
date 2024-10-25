@@ -1,0 +1,6 @@
+OrderID,Product,Quantity,Status
+101,Widget,10,Shipped
+102,Gadget,5,Canceled
+103,Widget,0,Canceled
+104,Doodad,7,Shipped
+105,Widget,15,Shipped
